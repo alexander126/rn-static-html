@@ -24,12 +24,18 @@
       window.addEventListener(
         'message',
         function (event) {
-          var receivedMessage = event.data
-          var messagesDiv = document.getElementById('messages')
-          var messageParagraph = document.createElement('p')
-          messageParagraph.textContent =
-            'Received from React Native: ' + receivedMessage
-          messagesDiv.appendChild(messageParagraph)
+          // Add check to ensure the message is intended for this handler
+          if (
+            typeof event.data === 'string' &&
+            event.data.startsWith('ReactNative:')
+          ) {
+            var receivedMessage = event.data.slice(12) // Remove prefix to display
+            var messagesDiv = document.getElementById('messages')
+            var messageParagraph = document.createElement('p')
+            messageParagraph.textContent =
+              'Received from React Native: ' + receivedMessage
+            messagesDiv.appendChild(messageParagraph)
+          }
         },
         false
       )
