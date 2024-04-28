@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Communication with React Native</title>
+  </head>
+  <body>
+    <input
+      type="text"
+      id="messageInput"
+      placeholder="Enter your message here"
+    />
+    <button onclick="sendToReactNative()">Send to React Native</button>
+    <h2>Messages from React Native will appear below:</h2>
+    <div id="messages"></div>
+
+    <script>
+      // Function to send message to React Native
+      function sendToReactNative() {
+        var message = document.getElementById('messageInput').value
+        window.ReactNativeWebView.postMessage(message)
+      }
+
+      // Listener for messages from React Native
+      window.addEventListener(
+        'message',
+        function (event) {
+          var receivedMessage = event.data
+          var messagesDiv = document.getElementById('messages')
+          var messageParagraph = document.createElement('p')
+          messageParagraph.textContent =
+            'Received from React Native: ' + receivedMessage
+          messagesDiv.appendChild(messageParagraph)
+        },
+        false
+      )
+    </script>
+  </body>
+</html>
